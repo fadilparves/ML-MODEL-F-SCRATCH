@@ -1,4 +1,5 @@
 import numpy as np
+
 class LinearRegression:
     
     def predict(self, X):
