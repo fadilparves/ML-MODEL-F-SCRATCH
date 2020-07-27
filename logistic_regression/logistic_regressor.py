@@ -2,7 +2,7 @@ import numpy as np
 
 class LogisticRegressor:
 
-    def _sigmoid(z):
+    def _sigmoid(self, z):
         return 1 / (1 + np.exp(-z))
 
     def _add_intercept(self, X):
@@ -22,7 +22,6 @@ class LogisticRegressor:
 
         for i in range(n_iter):
             z = np.dot(X, self.W)
-            print(z)
             h = self._sigmoid(z)
             gradient = np.dot(X.T, (h - y)) / y.size 
             self.W -= lr * gradient
