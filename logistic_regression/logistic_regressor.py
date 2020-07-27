@@ -1,13 +1,17 @@
 import numpy as np
 
 class LogisticRegressor:
+
+    def _sigmoid(z):
+        return 1 / (1 + np.exp(-z))
+
     def _add_intercept(self, X):
         intercept = np.ones((X.shape[0], 1))
         return np.concatenate((intercept, X), axis=1)
 
     def predict_probs(self, X):
         X = self._add_intercept(X) 
-        return sigmoid(np.dot(X, self.W))
+        return self._sigmoid(np.dot(X, self.W))
 
     def predict(self, X):
         return self.predict_probs(X).round()
@@ -18,7 +22,8 @@ class LogisticRegressor:
 
         for i in range(n_iter):
             z = np.dot(X, self.W)
-            h = sigmoid(z)
+            print(z)
+            h = self._sigmoid(z)
             gradient = np.dot(X.T, (h - y)) / y.size 
             self.W -= lr * gradient
             
