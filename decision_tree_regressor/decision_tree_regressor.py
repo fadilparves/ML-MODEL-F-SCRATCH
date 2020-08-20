@@ -50,3 +50,19 @@ class Node:
     
     @property
     def is_leaf(self): return self.score == float('inf')
+
+    def predict(self, x):
+        return np.array([self.predict_row(xi) for xi in x])
+    
+    def predict_row(self, xi):
+        if self.is_leaf: return self.val
+        node = self.lhs if xi[self.var_idx] <= self.split else self.rhs
+        return node.predict_row(xi)
+
+class DecisionTreeRegressor:
+    def fit(self, X, y, min_leaf=5):
+        self.dtree = Node(X, y, np.array(np.arange(len(y))), min_leaf)
+        return self
+    
+    def predict(self, X):
+        return self.dtree.predict(X.values)
