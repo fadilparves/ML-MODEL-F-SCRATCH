@@ -15,3 +15,12 @@ class Node:
         self.val = np.mean(y[idxs])
         self.score = float('inf')
         self.find_varsplit()
+
+    def find_varsplit(self):
+        for c in range(self.col_count): self.find_better_split(c)
+        if self.is_leaf: return
+        x = self.split_col
+        lhs = np.nonzero(x <= self.split)[0]
+        rhs = np.nonzero(x > self.split)[0]
+        self.lhs = Node(self.x, self.y, self.idxs[lhs], self.min_leaf)
+        self.rhs = Node(self.x, self.y, self.idxs[rhs], self.min_leaf)
