@@ -38,3 +38,9 @@ class Node:
                 self.var_idx = var_idx
                 self.score = curr_score
                 self.split = x[r]
+
+    def find_score(self, lhs, rhs):
+        y = self.y[self.idxs]
+        lhs_std = y[lhs].std()
+        rhs_std = y[rhs].std()
+        return lhs_std * lhs.sum() + rhs_std * rhs.sum()
