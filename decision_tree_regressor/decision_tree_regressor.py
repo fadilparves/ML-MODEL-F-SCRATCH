@@ -24,3 +24,17 @@ class Node:
         rhs = np.nonzero(x > self.split)[0]
         self.lhs = Node(self.x, self.y, self.idxs[lhs], self.min_leaf)
         self.rhs = Node(self.x, self.y, self.idxs[rhs], self.min_leaf)
+
+    def find_better_split(self, var_idx):
+        x = self.x.values[self.idxs, var_idx]
+        
+        for r in range(self.row_count):
+            lhs = x <= x[r]
+            rhs = x > x[r]
+            if rhs.sum() < self.min_leaf or lhs.sum() < self.min_leaf: continue
+            
+            curr_score = self.find_score(lhs, rhs)
+            if curr_score < self.score:
+                self.var_idx = var_idx
+                self.score = curr_score
+                self.split = x[r]
