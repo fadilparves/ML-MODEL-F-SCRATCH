@@ -44,3 +44,9 @@ class Node:
         lhs_std = y[lhs].std()
         rhs_std = y[rhs].std()
         return lhs_std * lhs.sum() + rhs_std * rhs.sum()
+
+    @property
+    def split_col(self): return self.x.values[self.idxs, self.var_idx]
+    
+    @property
+    def is_leaf(self): return self.score == float('inf')
