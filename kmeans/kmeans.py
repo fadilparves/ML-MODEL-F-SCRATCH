@@ -49,3 +49,20 @@ class KMeans:
                 break
                 
         return clusters
+
+def get_points(image_path):
+    img = Image.open(image_path)
+    img.thumbnail((200,400))
+    img = img.convert('RGB')
+    w, h = img.size
+
+    points = []
+    for count, color in img.getcolors(w * h):
+        for _ in range(count):
+            points.append(Point(color))
+
+    return points
+    
+def euclidean(p, q):
+    n_dim = len(p.coordinates)
+    return sqrt(sum([(p.coordinates[i] - q.coordinates[i]) ** 2 for i in range(n_dim)]))
