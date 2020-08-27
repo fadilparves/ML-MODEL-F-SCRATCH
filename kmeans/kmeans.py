@@ -28,3 +28,24 @@ class KMeans:
             plists[idx].append(p)
             
         return plists
+
+    def fit(self, points):
+        clusters = [Cluster(center=p, points=[p]) for p in random.sample(points, self.n_clusters)]
+        while True:
+            plists = self.assign_points(clusters, points)
+            
+            diff = 0
+            
+            for i in range(self.n_clusters):
+                if not plists[i]:
+                    continue
+                old = clusters[i]
+                center = self.calculate_center(plists[i])
+                new = Cluster(center, plists[i])
+                clusters[i] = new
+                diff = max(diff, euclidean(old.center, new.center))
+                
+            if diff < self.min_diff:
+                break
+                
+        return clusters
