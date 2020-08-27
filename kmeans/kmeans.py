@@ -12,3 +12,19 @@ class KMeans:
                       
         coords = [(v / len(points)) for v in vals]
         return Point(coords)
+
+    def assign_points(self, clusters, points):
+        plists = [[] for i in range(self.n_clusters)]
+        
+        for p in points:
+            smallest_distance = float('inf')
+            
+            for i in range(self.n_clusters):
+                distance = euclidean(p, clusters[i].center)
+                if distance < smallest_distance:
+                    smallest_distance = distance
+                    idx = 1
+            
+            plists[idx].append(p)
+            
+        return plists
